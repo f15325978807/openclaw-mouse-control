@@ -1,0 +1,131 @@
+{
+  "name": "OpenClaw Mouse Control",
+  "description": "智能鼠标控制技能 - 完全控制用户电脑鼠标，支持点击、移动、拖拽、滚动等操作",
+  "version": "1.0.0",
+  "author": "OpenClaw",
+  "dependencies": [
+    "desktop-agent"
+  ],
+  "skills": [
+    "desktop-control"
+  ],
+  "categories": [
+    "automation",
+    "mouse-control",
+    "desktop-interaction"
+  ],
+  "tags": [
+    "鼠标控制",
+    "桌面自动化",
+    "点击操作",
+    "拖拽操作",
+    "屏幕截图"
+  ],
+  "platform": "all",
+  "configuration": {
+    "requires_confirmation": {
+      "destructive_actions": true,
+      "file_operations": true,
+      "system_settings": false
+    },
+    "safety": {
+      "enable_failsafe": true,
+      "fail_safe_corner": "any_corner",
+      "max_operations_per_minute": 60
+    },
+    "screenshot": {
+      "default_format": "png",
+      "default_quality": 85,
+      "auto_cleanup": true
+    }
+  },
+  "entry_point": "SKILL.md",
+  "examples": [
+    {
+      "name": "打开并操作记事本",
+      "description": "打开记事本应用程序并输入文本",
+      "commands": [
+        "desktop-agent app open notepad",
+        "desktop-agent app focus notepad",
+        "desktop-agent keyboard write 'Hello World'"
+      ]
+    },
+    {
+      "name": "查找并点击按钮",
+      "description": "通过 OCR 定位屏幕上文字并点击",
+      "commands": [
+        "desktop-agent screen screenshot current.png --active",
+        "desktop-agent screen locate-text-coordinates '确定' --active",
+        "desktop-agent mouse click <x> <y>"
+      ]
+    }
+  ],
+  "commands": {
+    "mouse": {
+      "description": "鼠标控制命令",
+      "commands": [
+        "move",
+        "click",
+        "double-click",
+        "right-click",
+        "middle-click",
+        "drag",
+        "scroll",
+        "position"
+      ]
+    },
+    "keyboard": {
+      "description": "键盘控制命令",
+      "commands": [
+        "write",
+        "press",
+        "hotkey",
+        "keydown",
+        "keyup"
+      ]
+    },
+    "screen": {
+      "description": "屏幕和截图命令",
+      "commands": [
+        "screenshot",
+        "locate",
+        "locate-center",
+        "locate-text-coordinates",
+        "read-all-text",
+        "size",
+        "on-screen"
+      ]
+    },
+    "message": {
+      "description": "消息对话框命令",
+      "commands": [
+        "alert",
+        "confirm",
+        "prompt",
+        "password"
+      ]
+    },
+    "app": {
+      "description": "应用程序控制命令",
+      "commands": [
+        "open",
+        "focus",
+        "list"
+      ]
+    }
+  },
+  "best_practices": {
+    "step_1": "在执行任何操作前，先获取屏幕截图分析当前状态",
+    "step_2": "使用 screen locate 或 locate-text-coordinates 定位目标元素",
+    "step_3": "获取精确坐标后执行操作",
+    "step_4": "操作完成后验证结果，必要时重新截图确认",
+    "step_5": "复杂操作分步骤进行，每步验证后再继续"
+  },
+  "safety_rules": [
+    "永远不要假设屏幕坐标",
+    "危险操作前必须确认",
+    "操作后验证结果",
+    "模拟人类操作速度",
+    "多显示器环境需明确指定"
+  ]
+}
