@@ -7,6 +7,7 @@ from cli.keyboard import app as keyboard_app
 from cli.screen import app as screen_app
 from cli.dialog import app as dialog_app
 from cli.app import app as app_app
+from cli.native import app as native_app
 from core.utils.logger import setup_logging
 from core.config.settings import init_config
 
@@ -22,6 +23,7 @@ app.add_typer(keyboard_app, name="keyboard")
 app.add_typer(screen_app, name="screen")
 app.add_typer(dialog_app, name="dialog")
 app.add_typer(app_app, name="app")
+app.add_typer(native_app, name="native")
 
 
 @app.callback()
