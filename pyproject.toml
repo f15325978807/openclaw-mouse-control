@@ -1,13 +1,13 @@
 [project]
 name = "openclaw-mouse"
 version = "1.0.0"
-description = "OpenClaw 智能鼠标控制技能 - 赋予 AI Agent 完全控制用户电脑鼠标的能力"
+description = "OpenClaw 智能鼠标控制技能 - 生产级桌面自动化框架"
 readme = "README.md"
 requires-python = ">=3.8"
 authors = [
     { name = "OpenClaw" }
 ]
-keywords = ["mouse", "automation", "pyautogui", "ai", "agent", "skill", "openclaw"]
+keywords = ["mouse", "automation", "pyautogui", "ai", "agent", "skill", "openclaw", "desktop"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -22,14 +22,15 @@ dependencies = [
     "pyautogui>=0.9.54",
     "typer>=0.9.0",
     "pillow>=10.0.0",
+    "pyyaml>=6.0",
 ]
 
 [project.scripts]
-openclaw-mouse = "openclaw_mouse:app_cli"
+openclaw-mouse = "main:app"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["openclaw_mouse"]
+packages = ["core", "cli"]

@@ -1,0 +1,25 @@
+mouse:
+  default_duration: 0.2
+  default_drag_duration: 0.5
+  failsafe_enabled: true
+  pause: 0.1
+
+security:
+  whitelist_enabled: false
+  whitelist_apps: []
+  confirm_destructive: true
+  max_retries: 3
+  subprocess_timeout: 10
+
+logging:
+  level: INFO
+  file_enabled: true
+  log_dir: logs
+  max_file_size: 10485760
+  backup_count: 5
+
+vision:
+  ocr_enabled: false
+  ocr_backend: paddleocr
+  confidence_threshold: 0.8
+  screenshot_format: png
