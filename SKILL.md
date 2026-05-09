@@ -1,6 +1,6 @@
 ---
-name: OpenClaw Mouse Control
-description: 智能鼠标控制技能 - 完全控制用户电脑鼠标，支持点击、移动、拖拽、滚动等操作
+name: openclaw-mouse
+description: OpenClaw 智能鼠标控制技能 - 赋予 AI Agent 完全控制用户电脑鼠标的能力
 ---
 
 # 智能鼠标控制技能
@@ -16,6 +16,18 @@ description: 智能鼠标控制技能 - 完全控制用户电脑鼠标，支持�
 3. **分步执行与验证**：复杂操作需分步骤进行，每完成一步需确认操作结果，必要时重新截图验证当前状态后再继续。
 4. **安全确认**：执行可能存在风险的操作（如删除文件、关闭重要程序、确认不可逆操作等）前，必须向用户明确确认意图，避免误操作。
 
+## 安装
+
+在使用此技能前，需要先安装 CLI 工具：
+
+```bash
+# 进入技能目录
+cd ~/.openclaw/workspace/skills/openclaw-mouse-control
+
+# 安装依赖
+pip install -e .
+```
+
 ## 工具使用规范
 
 ### 获取屏幕信息
@@ -24,16 +36,16 @@ description: 智能鼠标控制技能 - 完全控制用户电脑鼠标，支持�
 
 ```bash
 # 获取屏幕尺寸
-desktop-agent screen size
+openclaw-mouse screen size
 
 # 获取当前鼠标位置
-desktop-agent mouse position
+openclaw-mouse mouse position
 
 # 获取当前窗口列表
-desktop-agent app list
+openclaw-mouse app list
 
 # 获取屏幕截图用于分析
-desktop-agent screen screenshot current_screen.png --active
+openclaw-mouse screen screenshot current_screen.png
 ```
 
 ### 点击操作
@@ -47,19 +59,19 @@ desktop-agent screen screenshot current_screen.png --active
 
 ```bash
 # 左键单击
-desktop-agent mouse click 500 300
+openclaw-mouse mouse click 500 300
 
 # 左键双击
-desktop-agent mouse double-click 500 300
+openclaw-mouse mouse double-click 500 300
 
 # 右键单击（打开上下文菜单）
-desktop-agent mouse right-click 500 300
+openclaw-mouse mouse right-click 500 300
 
 # 中键单击
-desktop-agent mouse middle-click 500 300
+openclaw-mouse mouse middle-click 500 300
 
 # 在当前鼠标位置单击
-desktop-agent mouse click
+openclaw-mouse mouse click
 ```
 
 ### 移动鼠标
@@ -72,10 +84,10 @@ desktop-agent mouse click
 
 ```bash
 # 快速移动到目标位置
-desktop-agent mouse move 960 540
+openclaw-mouse mouse move 960 540
 
 # 平滑移动（动画效果）
-desktop-agent mouse move 960 540 --duration 0.5
+openclaw-mouse mouse move 960 540 --duration 0.5
 ```
 
 ### 滚动页面
@@ -88,13 +100,13 @@ desktop-agent mouse move 960 540 --duration 0.5
 
 ```bash
 # 向上滚动5格
-desktop-agent mouse scroll 5
+openclaw-mouse mouse scroll 5
 
 # 向下滚动5格
-desktop-agent mouse scroll -5
+openclaw-mouse mouse scroll -5
 
 # 在指定位置向上滚动
-desktop-agent mouse scroll 3 800 600
+openclaw-mouse mouse scroll 3 800 600
 ```
 
 ### 拖拽操作
@@ -108,10 +120,10 @@ desktop-agent mouse scroll 3 800 600
 
 ```bash
 # 拖拽到目标位置
-desktop-agent mouse drag 800 600
+openclaw-mouse mouse drag 800 600
 
 # 慢速拖拽（更精确）
-desktop-agent mouse drag 800 600 --duration 1.0
+openclaw-mouse mouse drag 800 600 --duration 1.0
 ```
 
 ### 截图分析
@@ -120,22 +132,61 @@ desktop-agent mouse drag 800 600 --duration 1.0
 
 ```bash
 # 截图当前活动窗口
-desktop-agent screen screenshot current_screen.png --active
-
-# 截图特定窗口
-desktop-agent screen screenshot window.png --window "窗口标题"
+openclaw-mouse screen screenshot current_screen.png
 
 # 截图指定区域 (x, y, width, height)
-desktop-agent screen screenshot region.png --region "100,100,500,400"
+openclaw-mouse screen screenshot region.png --region "100,100,500,400"
 
-# 定位屏幕上的图像元素
-desktop-agent screen locate-center button.png --confidence 0.8
+# 获取屏幕尺寸
+openclaw-mouse screen size
 
-# 使用 OCR 定位文字坐标
-desktop-agent screen locate-text-coordinates "确定" --active
+# 检查坐标是否在屏幕内
+openclaw-mouse screen on-screen 500 300
+```
 
-# 读取屏幕上所有文字
-desktop-agent screen read-all-text --active
+### 键盘操作
+
+```bash
+# 输入文本
+openclaw-mouse keyboard write "Hello World"
+
+# 按键
+openclaw-mouse keyboard press enter
+
+# 快捷键
+openclaw-mouse keyboard hotkey "ctrl,c"
+
+# 按住键
+openclaw-mouse keyboard keydown shift
+
+# 释放键
+openclaw-mouse keyboard keyup shift
+```
+
+### 消息对话框
+
+```bash
+# 显示警告
+openclaw-mouse message alert "操作完成！"
+
+# 确认对话框
+openclaw-mouse message confirm "确定要删除吗？"
+
+# 输入对话框
+openclaw-mouse message prompt "请输入你的名字："
+```
+
+### 应用控制
+
+```bash
+# 打开应用
+openclaw-mouse app open notepad
+
+# 聚焦窗口
+openclaw-mouse app focus "记事本"
+
+# 列出所有窗口
+openclaw-mouse app list
 ```
 
 ## 完整工作流程示例
@@ -144,83 +195,84 @@ desktop-agent screen read-all-text --active
 
 ```bash
 # 步骤1: 打开应用程序
-desktop-agent app open notepad
+openclaw-mouse app open notepad
 
 # 步骤2: 等待应用启动，列出窗口确认
-desktop-agent app list
+openclaw-mouse app list
 
 # 步骤3: 聚焦到应用程序窗口
-desktop-agent app focus "Notepad"
+openclaw-mouse app focus "Notepad"
 
 # 步骤4: 输入文本
-desktop-agent keyboard write "Hello World"
+openclaw-mouse keyboard write "Hello World"
 ```
 
 ### 示例 2：查找并点击按钮
 
 ```bash
 # 步骤1: 获取屏幕截图
-desktop-agent screen screenshot analysis.png --active
+openclaw-mouse screen screenshot analysis.png
 
-# 步骤2: 定位目标按钮文字
-desktop-agent screen locate-text-coordinates "提交" --active
+# 步骤2: 查看屏幕尺寸
+openclaw-mouse screen size
 
-# 步骤3: 使用返回的坐标点击
-desktop-agent mouse click <返回的x坐标> <返回的y坐标>
+# 步骤3: 移动鼠标到目标位置并点击
+openclaw-mouse mouse move 500 300
+openclaw-mouse mouse click
 ```
 
 ### 示例 3：填写表单
 
 ```bash
 # 点击第一个输入框
-desktop-agent mouse click 300 200
+openclaw-mouse mouse click 300 200
 
 # 输入内容
-desktop-agent keyboard write "张三"
+openclaw-mouse keyboard write "张三"
 
 # 按 Tab 跳到下一个字段
-desktop-agent keyboard press tab
+openclaw-mouse keyboard press tab
 
 # 输入邮箱
-desktop-agent keyboard write "zhangsan@example.com"
+openclaw-mouse keyboard write "zhangsan@example.com"
 
 # 再次按 Tab 跳到下一个字段
-desktop-agent keyboard press tab
+openclaw-mouse keyboard press tab
 
 # 输入电话号码
-desktop-agent keyboard write "13800138000"
+openclaw-mouse keyboard write "13800138000"
 
 # 按 Enter 提交表单
-desktop-agent keyboard press enter
+openclaw-mouse keyboard press enter
 ```
 
 ### 示例 4：拖拽操作（文件移动）
 
 ```bash
 # 步骤1: 获取屏幕信息
-desktop-agent screen size
+openclaw-mouse screen size
 
 # 步骤2: 移动鼠标到拖拽起点
-desktop-agent mouse move 100 200
+openclaw-mouse mouse move 100 200
 
 # 步骤3: 执行拖拽到终点
-desktop-agent mouse drag 500 400 --duration 0.5
+openclaw-mouse mouse drag 500 400 --duration 0.5
 ```
 
 ### 示例 5：复制粘贴操作
 
 ```bash
 # 全选
-desktop-agent keyboard hotkey "ctrl,a"
+openclaw-mouse keyboard hotkey "ctrl,a"
 
 # 复制
-desktop-agent keyboard hotkey "ctrl,c"
+openclaw-mouse keyboard hotkey "ctrl,c"
 
 # 移动鼠标到目标位置
-desktop-agent mouse click 500 600
+openclaw-mouse mouse click 500 600
 
 # 粘贴
-desktop-agent keyboard hotkey "ctrl,v"
+openclaw-mouse keyboard hotkey "ctrl,v"
 ```
 
 ## 注意事项
@@ -243,35 +295,35 @@ desktop-agent keyboard hotkey "ctrl,v"
 
 ```bash
 # 列出所有可见窗口，找到正确的窗口标题
-desktop-agent app list
+openclaw-mouse app list
 
 # 使用模糊匹配重新聚焦
-desktop-agent app focus "部分窗口标题"
+openclaw-mouse app focus "部分窗口标题"
 ```
 
-### 图像未找到
+### 坐标超出屏幕
 
 ```bash
-# 提高匹配精度
-desktop-agent screen locate-center button.png --confidence 0.9
+# 获取屏幕尺寸
+openclaw-mouse screen size
 
-# 或降低精度
-desktop-agent screen locate-center button.png --confidence 0.6
+# 检查坐标是否在屏幕内
+openclaw-mouse screen on-screen 1500 900
 ```
 
 ### 点击位置偏移
 
 ```bash
 # 先移动到目标位置查看
-desktop-agent mouse move 500 300
+openclaw-mouse mouse move 500 300
 
 # 确认位置正确后再点击
-desktop-agent mouse click
+openclaw-mouse mouse click
 ```
 
 ## 性能优化建议
 
 1. **减少不必要的截图**：只在对操作结果存疑时才截图验证。
-2. **使用键盘快捷键**：优先使用 `desktop-agent keyboard hotkey` 而不是多次鼠标点击。
+2. **使用键盘快捷键**：优先使用 `openclaw-mouse keyboard hotkey` 而不是多次鼠标点击。
 3. **批量文本输入**：使用一次 `keyboard write` 输入完整文本，而不是多次调用。
 4. **选择合适的拖拽速度**：精确操作使用 `--duration 1.0`，快速操作使用默认速度。
